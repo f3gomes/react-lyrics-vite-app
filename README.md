@@ -38,7 +38,7 @@ Inicie o servidor
 
 ## Demonstração
 
-https://fomes-react-lyrics-app.netlify.app/
+https://react-lyrics-vite.netlify.app/
 
 
 ## Referência
