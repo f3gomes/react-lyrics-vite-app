@@ -1,4 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Fredoka+One&family=Montserrat&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Pangolin&display=swap");
+
+/* 
+font-family: 'Pangolin', cursive;
+font-family: 'Fredoka One', cursive;
+*/
 
 body {
   background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
@@ -8,13 +14,14 @@ body {
   min-height: 95vh;
   height: auto;
   text-align: center;
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Pangolin', cursive;
 }
 
 h1 {
-  font-family: "Fredoka One", cursive;
+  font-family: 'Fredoka One', cursive;
+  font-size: 40px;
   color: #5468ff;
-  text-shadow: #333 0.1em 0.1em 0.1em;
+  text-shadow: #333 0.04em 0.04em 0.04em;
 }
 
 pre {
@@ -29,6 +36,7 @@ hr {
 }
 
 .inp {
+  font-family: 'Pangolin', cursive;
   width: 200px;
   height: 40px;
   border: 2px solid #113a5d;
@@ -43,7 +51,7 @@ footer {
   bottom: 0;
   height: 10vh;
   width: 100%;
-  overflow:hidden;
+  overflow: hidden;
 }
 
 .footer-position {
@@ -128,9 +136,9 @@ footer {
   background-color: #333;
   height: 100%;
   width: 8px;
-	margin: 1px;
+  margin: 1px;
   display: inline-block;
-  
+
   -webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
   animation: sk-stretchdelay 1.2s infinite ease-in-out;
 }
@@ -141,8 +149,8 @@ footer {
 }
 
 .spinner .rect3 {
-  -webkit-animation-delay: -1.0s;
-  animation-delay: -1.0s;
+  -webkit-animation-delay: -1s;
+  animation-delay: -1s;
 }
 
 .spinner .rect4 {
@@ -156,17 +164,25 @@ footer {
 }
 
 @-webkit-keyframes sk-stretchdelay {
-  0%, 40%, 100% { -webkit-transform: scaleY(0.4) }  
-  20% { -webkit-transform: scaleY(1.0) }
+  0%,
+  40%,
+  100% {
+    -webkit-transform: scaleY(0.4);
+  }
+  20% {
+    -webkit-transform: scaleY(1);
+  }
 }
 
 @keyframes sk-stretchdelay {
-  0%, 40%, 100% { 
+  0%,
+  40%,
+  100% {
     transform: scaleY(0.4);
     -webkit-transform: scaleY(0.4);
-  }  20% { 
-    transform: scaleY(1.0);
-    -webkit-transform: scaleY(1.0);
   }
-
+  20% {
+    transform: scaleY(1);
+    -webkit-transform: scaleY(1);
+  }
 }
