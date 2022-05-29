@@ -5,6 +5,7 @@ import { Footer } from "./components/Footer";
 import { Spinner } from "./components/Spinner";
 import { InputComponent } from "./components/InputComponent";
 import { SearchButton } from "./components/SearchButton";
+import axios from "axios";
 
 export default function App() {
   const [artist, setArtist] = useState("");
@@ -22,8 +23,8 @@ export default function App() {
       changeBGColor();
       setLoading(true);
 
-      fetch(`https://api.lyrics.ovh/v1/${artist}/${song}`)
-        .then((res) => res.json())
+      axios
+        .get(`https://api.lyrics.ovh/v1/${artist}/${song}`)
         .then((data) => {
           if (data.lyrics) {
             setLyrics(data.lyrics);
@@ -36,6 +37,14 @@ export default function App() {
           }
 
           setLoading(false);
+        })
+        .catch((err) => {
+          console.log(err);
+
+          if (err.message) {
+            setLoading(false);
+            setLyrics("Serviço indisponível!");
+          }
         });
     } else {
       setLyrics("Digite nome do artista e música!");
