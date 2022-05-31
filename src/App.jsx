@@ -6,6 +6,7 @@ import { Spinner } from "./components/Spinner";
 import { InputComponent } from "./components/InputComponent";
 import { SearchButton } from "./components/SearchButton";
 import axios from "axios";
+import custom from "./data/customLyrics.json";
 
 export default function App() {
   const [artist, setArtist] = useState("");
@@ -19,7 +20,10 @@ export default function App() {
   };
 
   const searchLyrics = (artist, song) => {
-    if (artist && song) {
+    if (artist === "thay" && song === "") {
+      setLyrics(custom.lyric);
+
+    } else if (artist && song) {
       changeBGColor();
       setLoading(true);
 
@@ -72,7 +76,9 @@ export default function App() {
 
         <SearchButton
           text="Buscar"
-          onClick={() => searchLyrics(artist, song)}
+          onClick={() => {
+            searchLyrics(artist, song);
+          }}
         />
       </div>
 
