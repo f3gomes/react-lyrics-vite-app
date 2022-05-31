@@ -20,7 +20,10 @@ export default function App() {
   };
 
   const searchLyrics = (artist, song) => {
-    if (artist === "thay" && song === "") {
+    if (
+      (artist === "thay" && song === "") ||
+      (artist === "Thay" && song === "")
+    ) {
       setLyrics(custom.lyric);
 
     } else if (artist && song) {
