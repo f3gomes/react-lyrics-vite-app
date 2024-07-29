@@ -1,12 +1,14 @@
-import "./styles/global.css";
 import { useState } from "react";
+
+import axios from "axios";
+
 import { colors } from "./assets/colors";
 import { Footer } from "./components/Footer";
 import { Spinner } from "./components/Spinner";
-import { InputComponent } from "./components/InputComponent";
 import { SearchButton } from "./components/SearchButton";
-import axios from "axios";
-import custom from "./data/customLyrics.json";
+import { InputComponent } from "./components/InputComponent";
+
+import "./styles/global.css";
 
 export default function App() {
   const [artist, setArtist] = useState("");
@@ -19,46 +21,29 @@ export default function App() {
     document.body.style.backgroundImage = colors[index];
   };
 
-  const searchLyrics = (artist, song) => {
-    if (
-      (artist === "thay" && song === "") ||
-      (artist === "Thay" && song === "")
-    ) {
-      setLyrics(custom.lyric);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    } else if (artist && song) {
-      changeBGColor();
-      setLoading(true);
+    if (artist && song) {
+      try {
+        changeBGColor();
+        setLoading(true);
 
-      axios
-        .get(`https://api.lyrics.ovh/v1/${artist}/${song}`)
-        .then((data) => {
-          if (data.lyrics) {
-            setLyrics(data.lyrics);
-          } else {
-            setLyrics("Letra não encontrada!");
-
-            setTimeout(() => {
-              setLyrics("");
-            }, 3000);
-          }
-
-          setLoading(false);
-        })
-        .catch((err) => {
-          console.log(err);
-
-          if (err.message) {
-            setLoading(false);
-            setLyrics("Serviço indisponível!");
-          }
-        });
+        const resp = await axios.get(
+          `https://api.lyrics.ovh/v1/${artist}/${song}`
+        );
+        const data = await resp.data;
+        setLyrics(data.lyrics);
+      } catch (err) {
+        console.log(err);
+        if (err.response.data.error) {
+          setLyrics(err.response.data.error);
+        }
+      } finally {
+        setLoading(false);
+      }
     } else {
       setLyrics("Digite nome do artista e música!");
-
-      setTimeout(() => {
-        setLyrics("");
-      }, 3000);
     }
   };
 
@@ -66,7 +51,7 @@ export default function App() {
     <div className="App">
       <h1>Letras de Músicas </h1>
 
-      <div className="nav">
+      <form className="nav">
         <InputComponent
           placeholder="Artista"
           onChange={(e) => setArtist(e.target.value)}
@@ -77,13 +62,8 @@ export default function App() {
           onChange={(e) => setSong(e.target.value)}
         />
 
-        <SearchButton
-          text="Buscar"
-          onClick={() => {
-            searchLyrics(artist, song);
-          }}
-        />
-      </div>
+        <SearchButton text="Buscar" onClick={handleSubmit} />
+      </form>
 
       <hr />
       <pre>{loading ? <Spinner /> : lyrics}</pre>
