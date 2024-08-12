@@ -21,6 +21,18 @@ export default function App() {
     document.body.style.backgroundImage = colors[index];
   };
 
+  const formatLyrics = (text) => {
+    if (text.startsWith("Paroles")) {
+      const lenght = text.length;
+      const editLyricsOne = text.substring(22, lenght);
+      const editLyricsTwo = editLyricsOne.replace(" par ", " - ");
+      const editLyricsThree = editLyricsTwo.replace(/\n/, "\n\n");
+      return editLyricsThree;
+    } else {
+      return text;
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -32,8 +44,11 @@ export default function App() {
         const resp = await axios.get(
           `https://api.lyrics.ovh/v1/${artist}/${song}`
         );
+
         const data = await resp.data;
-        setLyrics(data.lyrics);
+        const letter = data.lyrics;
+
+        setLyrics(formatLyrics(letter));
       } catch (err) {
         console.log(err);
         if (err.response.data.error) {
